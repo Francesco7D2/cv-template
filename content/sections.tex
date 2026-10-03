@@ -1,0 +1,49 @@
+% Shared setup and the list of entries in each section.
+% Every file in variants/ loads this, then picks which sections to print
+% and in what order.
+\input{styles/variants.tex}
+\input{styles/theme.tex}
+\input{styles/layout.tex}
+\input{content/profile.tex}
+
+\makeatletter
+\hypersetup{
+  pdfauthor={\@firstname\space\@lastname},
+  pdftitle={\@firstname\space\@lastname\space CV},
+}
+\makeatother
+
+\newcommand{\cvExperience}{%
+  \ifvariant{research}{\cvsection{Research Experience}}{\cvsection{Experience}}
+  \begin{cventries}
+    \input{content/experience/northwind.tex}
+    \cventrygap
+    \input{content/experience/university-lab.tex}
+  \end{cventries}
+}
+
+\newcommand{\cvEducation}{%
+  \cvsection{Education}
+  \begin{cventries}
+    \input{content/education/masters.tex}
+    \cventrygap
+    \input{content/education/bachelors.tex}
+  \end{cventries}
+}
+
+\newcommand{\cvProjects}{%
+  \cvsection{Projects \& Awards}
+  \begin{cventries}
+    \input{content/projects/open-source.tex}
+    \cventrygap
+    \input{content/projects/hackathon.tex}
+  \end{cventries}
+}
+
+\newcommand{\cvSkills}{%
+  \cvsection{Skills}
+  \begin{cvskills}
+    \input{content/skills/technical.tex}
+    \input{content/skills/languages.tex}
+  \end{cvskills}
+}

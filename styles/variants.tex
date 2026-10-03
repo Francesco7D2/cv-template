@@ -1,20 +1,23 @@
 % Helpers for writing one CV that builds into several variants.
-% Each file in variants/ defines \cvvariant (its own file name) and then
-% loads content/cv.tex.
+% Each file in variants/ sets \cvvariant to its own name before loading
+% content/sections.tex, and the content files can then say:
 %
 %   \ifvariant{research}{shown in research}{shown everywhere else}
-%   \ifvariant{research,academic}{...}{...}    % any of several variants
+%   \ifvariant{research,academic}{...}{...}     % matches any listed variant
 %   \onlyin{industry}{shown only in industry}
 %   \except{industry}{shown everywhere except industry}
+%
+% They are fully expandable, so they also work inside tables (Skills) and
+% section titles.
 
-\newif\ifcvvariantmatch
-\newcommand*{\cvvariantcheck}[1]{%
-  \ifdefstring{\cvvariant}{#1}{\global\cvvariantmatchtrue}{}}
-
-\newcommand{\ifvariant}[3]{%
-  \global\cvvariantmatchfalse
-  \forcsvlist{\cvvariantcheck}{#1}%
-  \ifbool{cvvariantmatch}{#2}{#3}}
-
-\newcommand{\onlyin}[2]{\ifvariant{#1}{#2}{}}
-\newcommand{\except}[2]{\ifvariant{#1}{}{#2}}
+\ExplSyntaxOn
+\cs_new:Npn \ifvariant #1#2#3
+  {
+    \clist_map_function:nN {#1} \__cv_variant_check:n
+    \use_ii:nn {#2} {#3}
+  }
+\cs_new:Npn \__cv_variant_check:n #1
+  { \str_if_eq:eeT { \cvvariant } {#1} { \clist_map_break:n { \use_ii:nnn } } }
+\cs_new:Npn \onlyin #1#2 { \ifvariant {#1} {#2} { } }
+\cs_new:Npn \except #1#2 { \ifvariant {#1} { } {#2} }
+\ExplSyntaxOff
