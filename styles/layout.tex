@@ -3,6 +3,35 @@
 
 \fontdir[fonts/]
 
+% Section title with a rule that runs exactly to the right margin.
+\renewcommand{\cvsection}[1]{%
+  \vspace{\acvSectionTopSkip}
+  \sectionstyle{#1}
+  \phantomsection
+  \color{gray}\vhrulefill{0.9pt}\ignorespaces
+}
+
+% Free-text paragraph (used by the Summary section). Starts on its own line
+% even without a blank line after \cvsection.
+\renewenvironment{cvparagraph}{%
+  \par
+  \vspace{\acvSectionContentTopSkip}%
+  \vspace{-3mm}%
+  \paragraphstyle
+}{%
+  \par
+  \vspace{-1mm}%
+}
+
+% Single space after full stops; double spaces look odd in justified text.
+\frenchspacing
+
+% Allow a little extra stretch before letting a line run into the margin.
+\setlength{\emergencystretch}{1em}
+
+% Words that should never be hyphenated at a line break.
+\hyphenation{PyTorch TensorFlow JavaScript TypeScript GitHub}
+
 % Bullet lists: tighter than the class default, justified, with a little
 % room before the next entry.
 \renewenvironment{cvitems}{%
@@ -17,15 +46,23 @@
 }
 
 % Skills table with a fixed label column, so long labels wrap instead of
-% pushing the right column off the page.
+% pushing the right column off the page. \cvskill rows are collected and
+% typeset together at the end, which lets them live in separate files and
+% sit inside \onlyin{...} without leaving blank rows behind.
+\renewcommand*{\cvskill}[2]{%
+  \gappto\cvskillrows{\skilltypestyle{#1} & \skillsetstyle{#2} \\}}
 \renewenvironment{cvskills}{%
-  \vspace{\acvSectionContentTopSkip}
-  \vspace{-2mm}
+  \gdef\cvskillrows{}%
+  \setbox0=\hbox\bgroup % the body only collects rows; drop stray spaces
+}{%
+  \egroup
+  \vspace{\acvSectionContentTopSkip}%
+  \vspace{-2mm}%
   \begin{center}
     \setlength\tabcolsep{0pt}
     \setlength{\extrarowheight}{1pt}
     \begin{tabular*}{\textwidth}{@{}L{\cvskilllabelwidth} L{\dimexpr\textwidth-\cvskilllabelwidth\relax}@{}}
-}{%
+      \cvskillrows
     \end{tabular*}
   \end{center}
 }

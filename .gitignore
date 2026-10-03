@@ -1,0 +1,13 @@
+# Build output
+/dist/
+
+# LaTeX intermediates (in case something is built outside dist/)
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+
+.DS_Store

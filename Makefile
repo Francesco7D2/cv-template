@@ -4,6 +4,7 @@
 LATEXMK    := latexmk
 LATEXFLAGS := -xelatex -interaction=nonstopmode -halt-on-error -file-line-error
 VARIANTS   := $(basename $(notdir $(wildcard variants/*.tex)))
+MAX_PAGES  ?= 1
 
 .DEFAULT_GOAL := all
 .PHONY: all check previews watch clean $(VARIANTS)
@@ -17,7 +18,7 @@ $(VARIANTS):
 # Fails if a variant runs past one page; also reports overfull lines and
 # characters missing from the fonts. Set MAX_PAGES=2 for a two-page CV.
 check: all
-	@scripts/check.sh $(VARIANTS)
+	@MAX_PAGES=$(MAX_PAGES) scripts/check.sh $(VARIANTS)
 
 # Renders page one of each PDF to docs/<variant>.png for the README.
 previews: all

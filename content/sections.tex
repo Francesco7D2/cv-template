@@ -13,12 +13,27 @@
 }
 \makeatother
 
+% End the header's paragraph so the first section starts on its own.
+\newcommand{\cvHeader}{%
+  \makecvheader[\cvheaderalign]%
+  \par\vspace{\cvheadergap}%
+}
+
+\newcommand{\cvSummary}{%
+  \cvsection{Summary}
+  \begin{cvparagraph}
+    \input{content/summary.tex}
+  \end{cvparagraph}
+}
+
 \newcommand{\cvExperience}{%
   \ifvariant{research}{\cvsection{Research Experience}}{\cvsection{Experience}}
   \begin{cventries}
     \input{content/experience/northwind.tex}
     \cventrygap
     \input{content/experience/university-lab.tex}
+    \cventrygap
+    \input{content/experience/acme-internship.tex}
   \end{cventries}
 }
 

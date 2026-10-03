@@ -1,0 +1,52 @@
+name: Build CV
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  # Released files are named <PDF_NAME>-<variant>.pdf, e.g. Jane_Doe_CV-industry.pdf
+  PDF_NAME: CV
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex texlive-fonts-extra latexmk
+
+      - name: Build and check
+        run: make check
+
+      - name: Name the PDFs
+        run: |
+          mkdir -p release
+          for f in dist/*.pdf; do
+            cp "$f" "release/${PDF_NAME}-$(basename "$f")"
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cv
+          path: release/*.pdf
+
+      - name: Publish the latest release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: latest
+          name: Latest CV
+          body: Built from the main branch.
+          artifacts: release/*.pdf
+          allowUpdates: true
+          removeArtifacts: true
+          makeLatest: true

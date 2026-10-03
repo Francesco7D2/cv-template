@@ -24,9 +24,9 @@
 % Width of the label column in the Skills section.
 \newcommand{\cvskilllabelwidth}{3.3cm}
 
-% Vertical rhythm.
-\renewcommand{\acvSectionTopSkip}{1mm}
-\renewcommand{\acvHeaderAfterSocialSkip}{3mm}
+% Space under the header, and above each section title.
+\newcommand{\cvheadergap}{0mm}
+\renewcommand{\acvSectionTopSkip}{2mm}
 
 % Text sizes. Awesome-CV's defaults are a little small for screen reading;
 % these bump the body text to 10pt. See awesome-cv.cls for the full list.
@@ -34,4 +34,5 @@
 \renewcommand*{\headersocialstyle}[1]{{\fontsize{8pt}{10pt}\headerfont\color{text} #1}}
 \renewcommand*{\entrypositionstyle}[1]{{\fontsize{9pt}{11pt}\bodyfont\color{graytext} #1}}
 \renewcommand*{\descriptionstyle}[1]{{\fontsize{10pt}{12pt}\bodyfont\upshape\color{text} #1}}
+\renewcommand*{\paragraphstyle}{\fontsize{10pt}{12pt}\bodyfont\upshape\color{text}}
 \renewcommand*{\skillsetstyle}[1]{{\fontsize{10pt}{12pt}\bodyfont\color{text} #1}}
