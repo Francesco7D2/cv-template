@@ -32,6 +32,18 @@
 % Words that should never be hyphenated at a line break.
 \hyphenation{PyTorch TensorFlow JavaScript TypeScript GitHub}
 
+% List of entries. \cventrygap ends a paragraph between entries, and the
+% paragraphs inside add no space of their own, so the gap is exactly
+% \cventrygap whatever the LaTeX version.
+\renewenvironment{cventries}{%
+  \vspace{\acvSectionContentTopSkip}%
+  \begin{center}
+  \vspace{\parskip}%
+  \setlength{\parskip}{0pt}%
+}{%
+  \end{center}
+}
+
 % Bullet lists: tighter than the class default, justified, with a little
 % room before the next entry.
 \renewenvironment{cvitems}{%
