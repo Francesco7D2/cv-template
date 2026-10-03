@@ -11,3 +11,7 @@
 *.xdv
 
 .DS_Store
+
+# Personal source material (old CVs, job postings, notes)
+/inbox/*
+!/inbox/README.md

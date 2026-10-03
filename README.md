@@ -10,13 +10,49 @@ Built on [Awesome-CV](https://github.com/posquit0/Awesome-CV) by Claud D. Park.
 
 Both pages come from the same files. The left one is the `industry` variant
 and the right one is `research`: same jobs, dates and numbers, but a different
-headline, different bullet points and a different section order. Each job,
-degree and project lives in its own small file, so a date or a typo only ever
-gets fixed once.
+headline, different bullet points and a different section order.
+
+## Why use it
+
+**One set of facts, several CVs.** Each job, degree and project lives in one
+small file. Variants choose which bullets to show and in what order, so a new
+date or a corrected number is written once and appears in every version.
+Without this, you end up with `CV_final_v3_research.docx` and a typo fixed in
+two copies out of four.
+
+**Your CV has a history.** It's plain text in git, so you can see what
+changed between the version you sent in March and today, or go back to it.
+
+**Problems show up before a recruiter sees them.** `make check` fails if a
+version spills onto a second page and lists lines that run into the margin.
+GitHub builds the PDFs on every push with current TeX Live and publishes them
+at a fixed link that always serves the latest version.
+
+**Made to be edited by coding agents.** The files are small and predictable,
+`AGENTS.md` sets the rules (one page, facts written once, nothing invented),
+and there are ready-made workflows to import an existing CV, add content from
+a repository or web page, and tailor a version to a job posting. Entries can
+note where their facts came from, so a claim can be checked later.
+
+## When it's not the right tool
+
+- If you update your CV once a year and send the same version everywhere, a
+  document editor is less work.
+- You need a TeX installation (a few GB), or you edit on GitHub and let the
+  workflow build. LaTeX error messages can be cryptic, although `make check`
+  and an agent usually get you past them.
+- The design is Awesome-CV's. Colours, spacing and sizes are easy to change;
+  a completely different layout is real LaTeX work.
+- The PDF contains real, selectable text, but no template can promise how
+  every applicant tracking system will parse it. Paste the PDF's text into a
+  plain editor once to check it reads in a sensible order.
+- A public repository means a public CV, including the released PDFs. If
+  yours has your phone number or address, make the repository private.
 
 ## Getting started
 
-1. Click **Use this template** on GitHub, or clone the repository.
+1. Click **Use this template** on GitHub (choose private if your CV will have
+   personal details), or clone the repository.
 2. Install a TeX distribution with XeLaTeX and latexmk: MacTeX on macOS,
    TeX Live on Linux, MiKTeX on Windows.
 3. Run `make`. The PDFs end up in `dist/`.
@@ -29,7 +65,67 @@ release called `latest`, so these links always point at the newest version:
 Change `PDF_NAME` in the workflow to get file names like
 `Jane_Doe_CV-industry.pdf`.
 
-## Making it yours
+## Examples
+
+The commands below are for [Claude Code](https://claude.com/claude-code),
+where the workflows in `.claude/skills/` show up as slash commands. With
+another agent, point it at the file instead, for example: "Follow
+`.claude/skills/cv-import/SKILL.md` with `inbox/cv.pdf`."
+
+`inbox/` is the place for source material: your old CV, saved job postings,
+notes. Git ignores everything in it.
+
+**Move your current CV in.** Save it as a PDF (LinkedIn's "Save to PDF"
+export works too), put it in `inbox/` and run:
+
+```
+/cv-import inbox/cv.pdf
+```
+
+The agent lists what it found before writing anything, asks about unclear
+dates, keeps your wording, replaces the sample person, builds, and tells you
+if the result runs past one page. Improvements are suggested separately
+rather than slipped into the import.
+
+**Add a project from a repository.**
+
+```
+/cv-update https://github.com/you/fraud-detector add it to Projects, research variant only
+```
+
+It reads the README, results files and your commit history, writes the entry
+with numbers only where the repository states them, and notes the sources at
+the top of the file. It asks you for your role and dates if the repository
+doesn't make them clear.
+
+**Revise an entry from notes or a web page.**
+
+```
+/cv-update inbox/q3-notes.md update my current job with the launch
+/cv-update https://example.com/product use this for the one-line description of my current employer
+```
+
+**Tailor a version to a job posting.**
+
+```
+/cv-tailor https://jobs.example.com/ml-engineer acme
+```
+
+This creates `variants/acme.tex` and `dist/acme.pdf`: the most relevant
+bullets first, the posting's vocabulary where it's accurate, and a table of
+requirements against your CV. Gaps come back as questions ("Have you used
+Kubernetes? Where?"), not as new claims.
+
+**Small changes in plain language.**
+
+- "Add my new job at Contoso from March 2025 with three bullets, and drop the
+  internship from the industry CV."
+- "Make a `data` variant that leads with projects and has no summary."
+- "Switch to a dark green accent and left-align the header."
+
+Whichever agent made the change, read the PDF yourself before you send it.
+
+## Making it yours by hand
 
 | File | What's in it |
 | --- | --- |
@@ -128,21 +224,6 @@ of upstream, so it stays easy to compare or update.
 | `make clean` | Removes `dist/` |
 
 Going for two pages? `make check MAX_PAGES=2`.
-
-## Editing with a coding agent
-
-`AGENTS.md` describes the layout, the build commands and a few rules: one
-page, facts written once, no invented numbers. Most coding agents read it on
-their own, and `CLAUDE.md` points Claude Code at the same file. Requests like
-these work well:
-
-- "Add my new job at Contoso from March 2025 with three bullets, and drop the
-  internship from the industry CV."
-- "Make a `data` variant that leads with projects and has no summary."
-- "Here's a job description. Tailor the industry variant to it."
-- "Switch to a dark green accent and left-align the header."
-
-Whatever made the change, read the PDF yourself before sending it anywhere.
 
 ## Credits
 
