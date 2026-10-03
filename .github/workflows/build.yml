@@ -16,28 +16,34 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Current TeX Live, the same release that MacTeX and the TeX Live installer
+    # ship. Ubuntu's packaged TeX Live is a few years older and lays pages out
+    # slightly differently, so a CV that fits locally could spill over here.
+    container: texlive/texlive:latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install TeX Live
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y texlive-xetex texlive-fonts-extra latexmk
+      - uses: actions/checkout@v7
 
       - name: Build and check
-        run: make check
+        run: |
+          command -v make >/dev/null || { apt-get update && apt-get install -y make; }
+          make check
 
+      # The PDFs are uploaded even when the check fails, so you can see why.
       - name: Name the PDFs
+        if: ${{ !cancelled() }}
         run: |
           mkdir -p release
           for f in dist/*.pdf; do
+            [ -e "$f" ] || continue
             cp "$f" "release/${PDF_NAME}-$(basename "$f")"
           done
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
         with:
           name: cv
           path: release/*.pdf
+          if-no-files-found: ignore
 
       - name: Publish the latest release
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
