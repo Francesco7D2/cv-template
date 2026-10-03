@@ -13,9 +13,12 @@
 }
 \makeatother
 
-% End the header's paragraph so the first section starts on its own.
+% The class leaves a stray space between the boxes that make up the header,
+% which pushes it slightly right of centre. Right-aligning it in a box of
+% text width lets that space hang off the left edge instead. The \par then
+% makes the first section start on its own line.
 \newcommand{\cvHeader}{%
-  \makecvheader[\cvheaderalign]%
+  \noindent\makebox[\textwidth][r]{\makecvheader[\cvheaderalign]\unskip}%
   \par\vspace{\cvheadergap}%
 }
 

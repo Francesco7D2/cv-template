@@ -113,8 +113,8 @@ Paper size is the `a4paper` option in each variant file; use `letterpaper`
 for US Letter.
 
 `styles/layout.tex` holds the structural changes to Awesome-CV: list spacing,
-the skills table, section rules. `awesome-cv.cls` itself is kept as it was, so
-it stays easy to compare with upstream.
+the skills table, section rules. `awesome-cv.cls` itself is an unmodified copy
+of upstream, so it stays easy to compare or update.
 
 ## Commands
 
@@ -148,8 +148,12 @@ Whatever made the change, read the PDF yourself before sending it anywhere.
 
 - Design and class file: [Awesome-CV](https://github.com/posquit0/Awesome-CV)
   by Claud D. Park ([@posquit0](https://github.com/posquit0)), released under
-  the LaTeX Project Public License 1.3c. This repository splits the content
-  into variants and adjusts spacing and sizes; the look is Awesome-CV's.
+  the LaTeX Project Public License 1.3c. `awesome-cv.cls` is an unmodified
+  copy of upstream commit
+  [`af2d81a`](https://github.com/posquit0/Awesome-CV/blob/af2d81a11548ea0c13ac701d19851d09f539b4fd/awesome-cv.cls).
+  This repository splits the content into variants and adjusts spacing and
+  sizes in `styles/`; the look is Awesome-CV's. The sample CV is made up and
+  is not based on the author's own resume.
 - Fonts in `fonts/`: Roboto by Google (Apache 2.0) and Font Awesome 4 by Dave
   Gandy (SIL Open Font License 1.1). Their licences are in the same folder.
   Body text is set in Source Sans by Adobe, which comes with TeX Live and
@@ -157,5 +161,9 @@ Whatever made the change, read the PDF yourself before sending it anywhere.
 
 ## Licence
 
-`awesome-cv.cls` remains under the LPPL 1.3c and the fonts under their own
-licences. Everything else is MIT, see [LICENSE](LICENSE).
+- `awesome-cv.cls` and the files in `styles/`, which adapt parts of it, are
+  under the [LaTeX Project Public License 1.3c](https://www.latex-project.org/lppl/lppl-1-3c/).
+  If you change them and share the result, keep their headers and say what
+  you changed.
+- The fonts in `fonts/` are under their own licences, included there.
+- Everything else is MIT, see [LICENSE](LICENSE).

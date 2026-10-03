@@ -21,7 +21,8 @@ bullets, a different headline and a different section order.
 - `styles/layout.tex`: overrides of Awesome-CV environments (bullet lists,
   skills table, section rule, paragraph).
 - `styles/variants.tex`: `\ifvariant`, `\onlyin`, `\except`.
-- `awesome-cv.cls`: the upstream class. Don't edit it; override in `styles/`.
+- `awesome-cv.cls`: unmodified upstream class (LPPL 1.3c). Don't edit it;
+  override in `styles/` instead.
 
 ## Commands
 
@@ -49,7 +50,10 @@ bullets, a different headline and a different section order.
 5. Escape `% & $ # _` in text. Use `--` for date ranges, `\textbf{}` and
    `\textit{}` for emphasis, `\href{url}{text}` for links.
 6. Wrap whole `\item`s in variant commands, not half sentences.
-7. Bullets start with a verb, past tense for past roles and present tense for
+7. Keep the credit and licence headers at the top of `awesome-cv.cls` and
+   the `styles/` files. When you change a definition in `styles/`, update
+   the comment above it to say how it differs from the class version.
+8. Bullets start with a verb, past tense for past roles and present tense for
    the current one, and fit on one or two lines.
 
 ## How to
