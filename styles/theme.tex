@@ -1,0 +1,37 @@
+% Look and feel. Most visual changes only need this file.
+
+% Accent colour: headline, locations, links.
+% Awesome-CV also defines awesome-emerald, awesome-skyblue, awesome-red,
+% awesome-pink, awesome-orange, awesome-nephritis, awesome-concrete and
+% awesome-darknight, e.g. \colorlet{awesome}{awesome-skyblue}
+\definecolor{awesome}{HTML}{245675}
+
+% Page size is set in each variants/*.tex file (a4paper or letterpaper).
+\geometry{left=1.5cm, top=1cm, right=1.5cm, bottom=1.2cm, footskip=.5cm}
+
+% Header alignment: L, C or R.
+\newcommand{\cvheaderalign}{C}
+
+% Colour the first three letters of every section title.
+\setbool{acvSectionColorHighlight}{false}
+
+% What goes between phone, email, GitHub, ... in the header.
+\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+
+% Space between two entries in the same section.
+\newcommand{\cventrygap}{\vspace{0.8em}}
+
+% Width of the label column in the Skills section.
+\newcommand{\cvskilllabelwidth}{3.3cm}
+
+% Vertical rhythm.
+\renewcommand{\acvSectionTopSkip}{1mm}
+\renewcommand{\acvHeaderAfterSocialSkip}{3mm}
+
+% Text sizes. Awesome-CV's defaults are a little small for screen reading;
+% these bump the body text to 10pt. See awesome-cv.cls for the full list.
+\renewcommand*{\headerpositionstyle}[1]{{\fontsize{10pt}{12pt}\bodyfont\scshape\color{awesome} #1}}
+\renewcommand*{\headersocialstyle}[1]{{\fontsize{8pt}{10pt}\headerfont\color{text} #1}}
+\renewcommand*{\entrypositionstyle}[1]{{\fontsize{9pt}{11pt}\bodyfont\color{graytext} #1}}
+\renewcommand*{\descriptionstyle}[1]{{\fontsize{10pt}{12pt}\bodyfont\upshape\color{text} #1}}
+\renewcommand*{\skillsetstyle}[1]{{\fontsize{10pt}{12pt}\bodyfont\color{text} #1}}

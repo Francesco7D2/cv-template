@@ -1,0 +1,20 @@
+% Helpers for writing one CV that builds into several variants.
+% Each file in variants/ defines \cvvariant (its own file name) and then
+% loads content/cv.tex.
+%
+%   \ifvariant{research}{shown in research}{shown everywhere else}
+%   \ifvariant{research,academic}{...}{...}    % any of several variants
+%   \onlyin{industry}{shown only in industry}
+%   \except{industry}{shown everywhere except industry}
+
+\newif\ifcvvariantmatch
+\newcommand*{\cvvariantcheck}[1]{%
+  \ifdefstring{\cvvariant}{#1}{\global\cvvariantmatchtrue}{}}
+
+\newcommand{\ifvariant}[3]{%
+  \global\cvvariantmatchfalse
+  \forcsvlist{\cvvariantcheck}{#1}%
+  \ifbool{cvvariantmatch}{#2}{#3}}
+
+\newcommand{\onlyin}[2]{\ifvariant{#1}{#2}{}}
+\newcommand{\except}[2]{\ifvariant{#1}{}{#2}}
